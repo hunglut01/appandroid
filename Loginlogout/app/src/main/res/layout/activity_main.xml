@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/appbar">
+    </ImageView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:padding="25dp">
+        <TextView
+            android:id="@+id/singin_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="SIGN IN"
+            android:textSize="30dp"></TextView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/input_username"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:hint="Username"
+                />
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:hint="Passwod"
+                android:inputType="textPassword"
+                android:layout_below="@+id/input_username"/>
+            <EditText
+                android:id="@+id/verify_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Verify your password"
+                android:inputType="textPassword"
+                android:layout_below="@+id/input_password"
+                android:visibility="gone"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_below="@+id/verify_pass">
+                <Button
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="Login"
+                    android:id="@+id/btnlogin"
+
+                    />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="New user"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_addnewuser"
+
+                    />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_back_to_login"
+                    android:layout_weight="1"
+                    android:text="Back"
+                    android:visibility="gone"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Register"
+                    android:id="@+id/btnreg"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>
