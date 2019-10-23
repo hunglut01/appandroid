@@ -1,46 +1,40 @@
 package com.example.loginlogout;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.loginlogout.retrofit.NODEjs;
 import com.example.loginlogout.retrofit.retrofitclient;
-
-
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class login_activity extends AppCompatActivity {
+
     NODEjs API;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     EditText edt_username,edt_password, edt_verifypass;
     Button btn_login,btn_reg,btn_newuser,btn_to_login;
     TextView title;
+    sessionmanager session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //init API
+        //
+        //init API..................................................................................
         Retrofit retrofit = retrofitclient.getInstance();
         API = retrofit.create(NODEjs.class);
-        //view
+        //mapping...................................................................................
+        session = new sessionmanager(getApplicationContext());
         btn_login = findViewById(R.id.btnlogin);
         btn_newuser = findViewById(R.id.btn_addnewuser);
         btn_reg = findViewById(R.id.btnreg);
@@ -49,14 +43,14 @@ public class MainActivity extends AppCompatActivity {
         edt_password = findViewById(R.id.input_password);
         edt_verifypass = findViewById(R.id.verify_pass);
         title = findViewById(R.id.singin_title);
-        //event click login
+        //event click login........................................................................
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 login_user(edt_username.getText().toString(),edt_password.getText().toString());
             }
         });
-        //event click back to login
+        //event click back to login................................................................
         btn_to_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 btn_to_login.setVisibility(View.GONE);
             }
         });
-        //event click register
+        //event click register......................................................................
         btn_newuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else
                         {
-                            Toast.makeText(MainActivity.this, "Verify wrong password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(login_activity.this, "Verify wrong password", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -108,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
         compositeDisposable.clear();
         super.onDestroy();
     }
-    public void login_user(String user, String pass)
+    //dang nhap.....................................................................................
+    public void login_user(final String user, String pass)
     {
         compositeDisposable.add(API.loginUser(user,pass)
                 .subscribeOn(Schedulers.io())
@@ -117,19 +112,21 @@ public class MainActivity extends AppCompatActivity {
                     public void accept(String s) throws Exception {
                         if(s.contains("id"))
                         {
-                            Toast.makeText(MainActivity.this,"Login success",Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this,Main_menu.class);
+                            Toast.makeText(login_activity.this,"Login success",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(login_activity.this,Main_menu.class);
                             edt_password.setText("");
-                            intent.putExtra("name",edt_username.getText().toString());
+                            session.createLoginSession(user);
+                            //intent.putExtra("name",edt_username.getText().toString());
                             startActivity(intent);
                         }
                         else
                         {
-                            Toast.makeText(MainActivity.this,""+s,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(login_activity.this,""+s,Toast.LENGTH_SHORT).show();
                         }
                     }
                 }));
     }
+    //dang ki.......................................................................................
     public void registerUser(final String user, final String pass)
     {
         compositeDisposable.add(API.registerUser(user,pass)
@@ -138,8 +135,9 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        Toast.makeText(MainActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(login_activity.this, ""+s, Toast.LENGTH_SHORT).show();
                     }
                 }));
     }
+    //initstart
 }

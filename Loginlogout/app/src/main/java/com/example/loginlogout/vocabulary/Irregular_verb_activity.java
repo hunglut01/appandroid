@@ -35,30 +35,17 @@ public class Irregular_verb_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_irregular_verb_activity);
-        listiv = findViewById(R.id.listView_iv);
         //init menu bar
         actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.irregular_verbs));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setElevation(0);
+        listiv = findViewById(R.id.listView_iv);
         //init API
         Retrofit retrofit = retrofitclient.getInstance();
         API = retrofit.create(NODEjs.class);
         //getdata from server
-        compositeDisposable.add(API.Irregular("a")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        ArrayList<irregular> arr = getIrreList(s);
-                        arrIv.addAll(arr);
-                    }
-                }));
-        adapter = new ListViewIrregularAdapter(Irregular_verb_activity.this, arrIv);
-        listiv.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        //listiv.setAdapter(new ListViewIrregularAdapter(this, arrIv));
+        initdata();
     }
 
     @Override
@@ -112,5 +99,23 @@ public class Irregular_verb_activity extends AppCompatActivity {
             words.add(irre);
         }
         return words;
+    }
+    public void initdata()
+    {
+        compositeDisposable.add(API.Irregular("a")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        ArrayList<irregular> arr = getIrreList(s);
+                        arrIv.addAll(arr);
+                        adapter = new ListViewIrregularAdapter(Irregular_verb_activity.this, arrIv);
+                        listiv.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
+                }));
+
+
     }
 }
