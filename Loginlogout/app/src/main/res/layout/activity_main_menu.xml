@@ -95,7 +95,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:text="Vocabulary"
+                                    android:text="@string/vocabulary"
                                     android:textStyle="bold" />
 
                                 <View
@@ -140,7 +140,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:text="Reading"
+                                    android:text="@string/reading"
                                     android:textStyle="bold" />
 
                                 <View
@@ -194,7 +194,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:text="Grammar"
+                                    android:text="@string/grammar"
                                     android:textStyle="bold" />
 
                                 <View
@@ -239,7 +239,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:text="Listening"
+                                    android:text="@string/listening"
                                     android:textStyle="bold" />
 
                                 <View
@@ -294,7 +294,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:text="Logout"
+                                    android:text="@string/action_logout"
                                     android:textStyle="bold" />
 
                             </LinearLayout>

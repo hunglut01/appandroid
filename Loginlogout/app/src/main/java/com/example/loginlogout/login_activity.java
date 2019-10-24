@@ -54,7 +54,7 @@ public class login_activity extends AppCompatActivity {
         btn_to_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                title.setText("SIGN IN");
+                title.setText(getResources().getString(R.string.sign_in));
                 btn_login.setVisibility(View.VISIBLE);
                 btn_newuser.setVisibility(View.VISIBLE);
                 edt_verifypass.setVisibility(View.GONE);
@@ -66,7 +66,7 @@ public class login_activity extends AppCompatActivity {
         btn_newuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                title.setText("SIGN UP");
+                title.setText(getResources().getString(R.string.sign_up));
                 btn_login.setVisibility(View.GONE);
                 btn_newuser.setVisibility(View.GONE);
                 edt_verifypass.setVisibility(View.VISIBLE);
@@ -117,6 +117,7 @@ public class login_activity extends AppCompatActivity {
                             edt_password.setText("");
                             session.createLoginSession(user);
                             //intent.putExtra("name",edt_username.getText().toString());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
                         else

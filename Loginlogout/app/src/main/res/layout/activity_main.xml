@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="SIGN IN"
+            android:text="@string/sign_in"
             android:textSize="30dp"></TextView>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,14 +30,14 @@
                 android:id="@+id/input_username"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:hint="Username"
+                android:hint="Tài khoản"
                 />
 
             <EditText
                 android:id="@+id/input_password"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:hint="Passwod"
+                android:hint="Mật khẩu"
                 android:inputType="textPassword"
                 android:layout_below="@+id/input_username"/>
             <EditText
@@ -59,14 +59,14 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
-                    android:text="Login"
+                    android:text="@string/sign_in"
                     android:id="@+id/btnlogin"
 
                     />
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="New user"
+                    android:text="@string/new_user"
                     android:layout_weight="1"
                     android:id="@+id/btn_addnewuser"
 
