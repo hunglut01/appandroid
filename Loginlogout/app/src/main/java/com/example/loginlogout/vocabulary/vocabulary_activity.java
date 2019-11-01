@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.loginlogout.R;
 import com.example.loginlogout.adapter.WordAdapter;
@@ -31,6 +32,7 @@ import retrofit2.Retrofit;
 public class vocabulary_activity extends AppCompatActivity {
     NODEjs API;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private TextView text;
     private RecyclerView lvList;
     private WordAdapter wordAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -47,6 +49,7 @@ public class vocabulary_activity extends AppCompatActivity {
         anhviet = findViewById(R.id.anhviet_layout);
         vietanh = findViewById(R.id.vietanh_layout);
         batquytac = findViewById(R.id.batquytac_layout);
+        text = findViewById(R.id.textView);
         //menu...........................................
         actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.search));
@@ -55,6 +58,27 @@ public class vocabulary_activity extends AppCompatActivity {
         //init API
         Retrofit retrofit = retrofitclient.getInstance();
         API = retrofit.create(NODEjs.class);
+
+        //
+        batquytac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(vocabulary_activity.this,Irregular_verb_activity.class);
+                startActivity(intent);
+            }
+        });
+        anhviet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                text.setText("Anh-Việt");
+            }
+        });
+        vietanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                text.setText("Việt-Anh");
+            }
+        });
         lvList = findViewById(R.id.lvList);
         wordAdapter = new WordAdapter(wordList, this);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -82,9 +106,6 @@ public class vocabulary_activity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.to_IR:
-                Intent intent = new Intent(vocabulary_activity.this,Irregular_verb_activity.class);
-                startActivity(intent);
             default:
                 break;
         }
@@ -115,9 +136,14 @@ public class vocabulary_activity extends AppCompatActivity {
                 }
                 else
                 {
-                    initdata(s);
-                    //searchView.clearFocus();
-                    // false;
+                    if(text.getText()=="Anh-Việt")
+                    {
+                        initdata(s);
+                    }
+                    else
+                    {
+                        initdataVA(s);
+                    }
                 }
                 return false;
             }
@@ -133,6 +159,25 @@ public class vocabulary_activity extends AppCompatActivity {
     public void initdata(String a) {
         wordList.clear();
         compositeDisposable.add(API.Search(a)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        ArrayList<Word> arr = getWordList(s);
+                        wordList.addAll(arr);
+                        wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
+                        linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
+                        lvList.setAdapter(wordAdapter);
+                        wordAdapter.notifyDataSetChanged();
+
+                    }
+                }));
+    }
+    public void initdataVA(String a)
+    {
+        wordList.clear();
+        compositeDisposable.add(API.Searchva(a)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {

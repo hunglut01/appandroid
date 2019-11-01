@@ -19,6 +19,9 @@ public interface NODEjs {
     @GET("search/{word}")
     Observable<String> Search(@Path("word") String word);
 
+    @GET("searchva/{word}")
+    Observable<String> Searchva(@Path("word") String word);
+
     @GET("irregular/{a}")
     Observable<String> Irregular(@Path("a") String a);
 

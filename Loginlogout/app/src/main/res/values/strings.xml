@@ -18,6 +18,7 @@
     <string name="listening">Kiểm tra nghe</string>
     <string name="grammar">Ngữ pháp</string>
     <string name="add">Thêm</string>
+    <string name="searchword_and_irre">Tra từ - Bảng bất quy tắc</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
