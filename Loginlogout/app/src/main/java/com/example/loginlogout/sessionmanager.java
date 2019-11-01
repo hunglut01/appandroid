@@ -60,11 +60,13 @@ public class sessionmanager {
         if (!this.isLoggedIn()) {
             // user is not logged in redirect him to Login Activity
             Intent i = new Intent(_context, login_activity.class);
-            // Closing all the Activities
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
             // Add new Flag to start new Activity
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             // Staring Login Activity
             _context.startActivity(i);
@@ -92,15 +94,17 @@ public class sessionmanager {
         // Clearing all data from Shared Preferences
         editor.clear();
         editor.commit();
-
         // After logout redirect user to Loing Activity
         Intent i = new Intent(_context, login_activity.class);
         // Closing all the Activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         // Add new Flag to start new Activity
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Staring Login Activity
         _context.startActivity(i);
+
     }
 }

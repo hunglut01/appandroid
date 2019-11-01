@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.loginlogout.R;
@@ -110,31 +111,20 @@ public class vocabulary_activity extends AppCompatActivity {
                     linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
                     lvList.setAdapter(wordAdapter);
                     wordAdapter.notifyDataSetChanged();
+                    //return false;
                 }
                 else
                 {
                     initdata(s);
-                    wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
-                    linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
-                    lvList.setAdapter(wordAdapter);
-                    wordAdapter.notifyDataSetChanged();
-
+                    //searchView.clearFocus();
+                    // false;
                 }
-                searchView.clearFocus();
-                return true;
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
 
-                if(s.isEmpty())
-                {
-                    wordList.clear();
-                    wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
-                    linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
-                    lvList.setAdapter(wordAdapter);
-                    wordAdapter.notifyDataSetChanged();
-                }
                 return true;
             }
         });
@@ -150,8 +140,13 @@ public class vocabulary_activity extends AppCompatActivity {
                     public void accept(String s) throws Exception {
                         ArrayList<Word> arr = getWordList(s);
                         wordList.addAll(arr);
+                        wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
+                        linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
+                        lvList.setAdapter(wordAdapter);
+                        wordAdapter.notifyDataSetChanged();
 
                     }
                 }));
     }
+
 }

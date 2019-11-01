@@ -75,7 +75,6 @@ public class grammar_activity extends AppCompatActivity implements AdapterView.O
                 arr.addAll(temp);
                 adapter=new GrammarAdapter(grammar_activity.this,R.layout.grammar_item,arr);
                 lstGrammar.setAdapter(adapter);
-                //Toast.makeText(grammar_activity.this, ""+s, Toast.LENGTH_SHORT).show();
             }
         }));
     }
