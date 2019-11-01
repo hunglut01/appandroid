@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+
 import com.example.loginlogout.R;
 import com.example.loginlogout.adapter.WordAdapter;
 import com.example.loginlogout.model.Word;
@@ -34,11 +36,17 @@ public class vocabulary_activity extends AppCompatActivity {
     private ArrayList<Word> wordList = new ArrayList<>();
     private ActionBar actionBar;
     private SearchView searchView;
+    private LinearLayout anhviet, vietanh, batquytac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vocabulary_activity);
+        //mapping...................................................................................
+        anhviet = findViewById(R.id.anhviet_layout);
+        vietanh = findViewById(R.id.vietanh_layout);
+        batquytac = findViewById(R.id.batquytac_layout);
+        //menu...........................................
         actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.search));
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -112,19 +120,21 @@ public class vocabulary_activity extends AppCompatActivity {
                     wordAdapter.notifyDataSetChanged();
 
                 }
+                searchView.clearFocus();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
 
-                //ArrayList<Word> arr = new ArrayList<>();
-
-
-                /*for (Word w : wordList) {
-                    if (w.getWord().contains(s.toLowerCase())) arr.add(w);
+                if(s.isEmpty())
+                {
+                    wordList.clear();
+                    wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
+                    linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
+                    lvList.setAdapter(wordAdapter);
+                    wordAdapter.notifyDataSetChanged();
                 }
-                lvList.setAdapter(new WordAdapter(arr, vocabulary_activity.this));*/
                 return true;
             }
         });

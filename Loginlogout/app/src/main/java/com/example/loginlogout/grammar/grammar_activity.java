@@ -17,14 +17,10 @@ import com.example.loginlogout.adapter.GrammarAdapter;
 import com.example.loginlogout.model.GrammarModel;
 import com.example.loginlogout.retrofit.NODEjs;
 import com.example.loginlogout.retrofit.retrofitclient;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -50,11 +46,9 @@ public class grammar_activity extends AppCompatActivity implements AdapterView.O
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setElevation(0);
         lstGrammar = findViewById(R.id.lst_grammar);
+
         initdata();
         lstGrammar.setOnItemClickListener(this);
-
-
-
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -77,6 +71,7 @@ public class grammar_activity extends AppCompatActivity implements AdapterView.O
             @Override
             public void accept(String s) throws Exception {
                 ArrayList<GrammarModel> temp = inserttoList(s);
+                arr.clear();
                 arr.addAll(temp);
                 adapter=new GrammarAdapter(grammar_activity.this,R.layout.grammar_item,arr);
                 lstGrammar.setAdapter(adapter);

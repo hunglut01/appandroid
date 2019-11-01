@@ -3,9 +3,12 @@ package com.example.loginlogout;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +22,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
+
+import static android.net.NetworkInfo.State.CONNECTED;
 
 public class login_activity extends AppCompatActivity {
 
@@ -46,24 +51,23 @@ public class login_activity extends AppCompatActivity {
         edt_password = findViewById(R.id.input_password);
         edt_verifypass = findViewById(R.id.verify_pass);
         title = findViewById(R.id.singin_title);
+        //check internet connection................................................................
+        if(!checknetwork())
+        {
+            showdialog("Không có kết nối mạng!!!");
+        }
         //event click login........................................................................
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    login_user(edt_username.getText().toString(),edt_password.getText().toString());
-                }
-                catch (Exception e)
-                {
-                    showdialog("Không thể kết nối đến server!!!");
-                }
-
+                login_user(edt_username.getText().toString(),edt_password.getText().toString());
             }
         });
         //event click back to login................................................................
         btn_to_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clear();
                 title.setText(getResources().getString(R.string.sign_in));
                 btn_login.setVisibility(View.VISIBLE);
                 btn_newuser.setVisibility(View.VISIBLE);
@@ -76,6 +80,7 @@ public class login_activity extends AppCompatActivity {
         btn_newuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clear();
                 title.setText(getResources().getString(R.string.sign_up));
                 btn_login.setVisibility(View.GONE);
                 btn_newuser.setVisibility(View.GONE);
@@ -87,14 +92,7 @@ public class login_activity extends AppCompatActivity {
                     public void onClick(View view) {
                         if(edt_password.getText().toString().equals(edt_verifypass.getText().toString()))
                         {
-                            try {
-                                registerUser(edt_username.getText().toString(),edt_password.getText().toString());
-                            }
-                            catch (Exception e)
-                            {
-                                showdialog("Không thể kết nối đến server!!!");
-                            }
-
+                            registerUser(edt_username.getText().toString(),edt_password.getText().toString());
                         }
                         else
                         {
@@ -172,5 +170,22 @@ public class login_activity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+    public boolean checknetwork()
+    {
+        ConnectivityManager check = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo[] info = check.getAllNetworkInfo();
+        for (int i = 0; i<info.length; i++){
+            if (info[i].getState() == CONNECTED){
+                return true;
+            }
+        }
+        return false;
+    }
+    public void clear()
+    {
+        edt_password.setText("");
+        edt_username.setText("");
+        edt_verifypass.setText("");
     }
 }

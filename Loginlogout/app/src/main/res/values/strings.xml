@@ -4,6 +4,7 @@
     <string name="username">Tài khoản </string>
     <string name="password">Mật khẩu </string>
     <string name="sign_up">Đăng kí</string>
+    <string name="back">Trở lại</string>
     <string name="new_user">Tạo tài khoản</string>
     <string name="action_logout">Đăng xuất</string>
     <string name="search">Tìm kiếm</string>

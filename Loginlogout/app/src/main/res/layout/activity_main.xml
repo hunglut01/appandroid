@@ -76,12 +76,12 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_back_to_login"
                     android:layout_weight="1"
-                    android:text="Back"
+                    android:text="@string/back"
                     android:visibility="gone"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Register"
+                    android:text="@string/sign_up"
                     android:id="@+id/btnreg"
                     android:layout_weight="1"
                     android:visibility="gone"
