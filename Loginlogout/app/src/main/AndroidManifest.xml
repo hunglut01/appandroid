@@ -15,14 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".grammar.grammar_detail"
+        <activity android:name=".listening.listening"
             android:theme="@style/AppTheme1">
 
         </activity>
         <activity
+            android:name=".grammar.grammar_detail"
+            ></activity>
+        <activity
             android:name=".grammar.grammar_activity"
-            android:theme="@style/AppTheme1">
-        </activity>
+            android:theme="@style/AppTheme1"></activity>
         <activity
             android:name=".vocabulary.Irregular_verb_activity"
             android:theme="@style/AppTheme1" />
@@ -31,9 +33,7 @@
             android:theme="@style/AppTheme1" />
         <activity
             android:name=".vocabulary.vocabulary_activity"
-            android:theme="@style/AppTheme1" >
-
-        </activity>
+            android:theme="@style/AppTheme1"></activity>
         <activity
             android:name=".Main_menu"
             android:theme="@style/AppTheme">

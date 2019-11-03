@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".listening.listening">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <SeekBar
+            android:layout_margin="10dp"
+            android:id="@+id/audio_status"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            />
+        <Button
+            android:id="@+id/btn_stop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text=">"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/audio_status"/>
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="&lt;&lt;"
+            android:layout_toLeftOf="@+id/btn_stop"
+            android:layout_below="@id/audio_status"/>
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="&gt;&gt;"
+            android:layout_toRightOf="@id/btn_stop"
+            android:id="@+id/btn_forward"
+            android:layout_below="@id/audio_status"/>
+    </RelativeLayout>
+
+</RelativeLayout>
