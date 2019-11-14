@@ -136,7 +136,7 @@ public class vocabulary_activity extends AppCompatActivity {
                 }
                 else
                 {
-                    if(text.getText()=="Anh-Việt")
+                    if(text.getText().equals("Anh-Việt"))
                     {
                         initdata(s);
                     }
