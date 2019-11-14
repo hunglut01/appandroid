@@ -158,7 +158,7 @@ public class vocabulary_activity extends AppCompatActivity {
 
     public void initdata(String a) {
         wordList.clear();
-        compositeDisposable.add(API.Search(a)
+        compositeDisposable.add(API.Searchav(a)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {

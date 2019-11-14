@@ -88,6 +88,7 @@ public class grammar_activity extends AppCompatActivity implements AdapterView.O
             gram.topic = jsonObject.getString("topic");
             gram.name = jsonObject.getString("name");
             gram.html = jsonObject.getString("html");
+            gram.image = jsonObject.getString("image");
             grammar.add(gram);
         }
         return grammar;

@@ -4,6 +4,7 @@ public class GrammarModel {
     public String topic;
     public String name;
     public String html;
+    public String image;
 
 
     public String getTopic() {

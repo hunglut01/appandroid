@@ -25,4 +25,6 @@
     <color name="colorDrakBlue">#3848AF</color>
     <color name="colorSeparator">#F2BBBBBB</color>
     <color name="colorGreen">#30C236</color>
+    <color name="button">#036a96</color>
+    <color name="unbutton">#cfcfcf</color>
 </resources>

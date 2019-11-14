@@ -11,16 +11,16 @@
         android:background="#FFFFFF"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="15dp">
+
         <ListView
             android:id="@+id/lst_grammar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="#FFFFFF"
             android:dividerHeight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
             android:scrollbars="none"
             android:listSelector ="@drawable/custom_item_istview"
+
             />
     </RelativeLayout>
 

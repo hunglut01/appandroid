@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,19 +31,18 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class reading_activity extends AppCompatActivity {
+public class reading_activity extends AppCompatActivity implements View.OnClickListener {
     ArrayList<readingdata> listquestionreading1 = new ArrayList<>();
     private ActionBar actionBar;
-    private TextView in_ques,stt,time;
-    private RadioButton ca,cb,cc,cd;
-    private Button start_test, submit;
-    private RelativeLayout start_layout, table_layout, question_layout;
-    private RadioGroup groupanwser;
-    private int i = 0;
+    private TextView in_ques,time,suggest;
+    private Button start_test, submit, next, back,number,unfocus;
+    private int i = 0, temp = 0;
     private int socaudung;
     private CountDownTimer countDownTimer;
     private long timeleft = 1200000;
-
+    private Button[] btn = new Button[4];
+    private int[] btn_id = {R.id.a_1,R.id.b_1,R.id.c_1,R.id.d_1};
+    private TextView a1,b1,c1,d1;
     NODEjs API;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     @Override
@@ -50,76 +50,43 @@ public class reading_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_activity);
         //mapping..................................................................................
-        start_layout = findViewById(R.id.start_layout);
-        table_layout = findViewById(R.id.table_layout);
-        question_layout = findViewById(R.id.question_layout);
+
         in_ques = findViewById(R.id.txt_question);
-        ca = findViewById(R.id.a);
-        cb = findViewById(R.id.b);
-        cc = findViewById(R.id.c);
-        cd = findViewById(R.id.d);
-        stt = findViewById(R.id.stt);
-        start_test = findViewById(R.id.start);
-        groupanwser = findViewById(R.id.radioGroup);
-        submit = findViewById(R.id.submit_test);
-        time = findViewById(R.id.txt_timer);
-        //init actionbar...........................................................................
-        actionBar = getSupportActionBar();
-        actionBar.setTitle("Reading multiple-choice");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setElevation(0);
+        for(int i = 0; i < btn.length ; i++)
+        {
+            btn[i] = findViewById(btn_id[i]);
+            btn[i] = findViewById(btn_id[i]);
+            btn[i] = findViewById(btn_id[i]);
+            btn[i].setOnClickListener(this);
+            btn[i].setOnClickListener(this);
+            btn[i].setOnClickListener(this);
+        }
+        a1 = findViewById(R.id.a);
+        b1 = findViewById(R.id.b);
+        c1 = findViewById(R.id.c);
+        d1 = findViewById(R.id.d);
+        suggest = findViewById(R.id.txt_suggest);
+        suggest.setVisibility(View.GONE);
+        next = findViewById(R.id.btn_next);
+        back = findViewById(R.id.btn_back);
+        number = findViewById(R.id.txt_numques);
+        submit = findViewById(R.id.btn_submit);
+        next.setOnClickListener(this);
+        back.setOnClickListener(this);
+        back.setEnabled(false);
+        submit.setOnClickListener(this);
         //init retrofit API........................................................................
         Retrofit retrofit = retrofitclient.getInstance();
         API = retrofit.create(NODEjs.class);
         //luu data nhap tu API.....................................................................
         insertlist();
-        //su kien bat dau..........................................................................
-        start_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                table_layout.setVisibility(View.VISIBLE);
-                question_layout.setVisibility(View.VISIBLE);
-                start_layout.setVisibility(View.GONE);
-                starttimer();
-            }
-        });
-        //su kien chon dap an......................................................................
-        groupanwser.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId)
-                {
-                    case R.id.a:
-                    {
-                        listquestionreading1.get(i).setUser_anw(1);
-                        break;
-                    }
-                    case R.id.b:
-                    {
-                        listquestionreading1.get(i).setUser_anw(2);
-                        break;
-                    }
-                    case R.id.c:
-                    {
-                        listquestionreading1.get(i).setUser_anw(3);
-                        break;
-                    }
-                    case R.id.d:
-                    {
-                        listquestionreading1.get(i).setUser_anw(4);
-                        break;
-                    }
-                }
-            }
-        });
-        //su kien nop bai..........................................................................
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checktest();
 
-            }
-        });
+        //su kien bat dau..........................................................................
+
+        //su kien chon dap an......................................................................
+
+        //su kien nop bai..........................................................................
+
     }
     //get all question va hien cau hoi mac dinh....................................................
     public void insertlist()
@@ -135,10 +102,10 @@ public class reading_activity extends AppCompatActivity {
                             ArrayList<readingdata> arr = initlistquestion(s);
                             listquestionreading1.addAll(arr);
                             in_ques.setText(listquestionreading1.get(0).getQuestion());
-                            ca.setText(listquestionreading1.get(0).getAnwa());
-                            cb.setText(listquestionreading1.get(0).getAnwb());
-                            cc.setText(listquestionreading1.get(0).getAnwc());
-                            cd.setText(listquestionreading1.get(0).getAnwd());
+                            a1.setText(listquestionreading1.get(0).getAnwa());
+                            b1.setText(listquestionreading1.get(0).getAnwb());
+                            c1.setText(listquestionreading1.get(0).getAnwc());
+                            d1.setText(listquestionreading1.get(0).getAnwd());
                         }
                     }));
         }
@@ -170,232 +137,166 @@ public class reading_activity extends AppCompatActivity {
     public void getquestion(int a)
     {
         in_ques.setText(listquestionreading1.get(a).getQuestion());
-        ca.setText(listquestionreading1.get(a).getAnwa());
-        cb.setText(listquestionreading1.get(a).getAnwb());
-        cc.setText(listquestionreading1.get(a).getAnwc());
-        cd.setText(listquestionreading1.get(a).getAnwd());
-    }
-    //thay doi stt cau hoi.........................................................................
-    public void change_number(String a)
-    {
-        stt.setText(a+". ");
+        a1.setText(listquestionreading1.get(a).getAnwa());
+        b1.setText(listquestionreading1.get(a).getAnwb());
+        c1.setText(listquestionreading1.get(a).getAnwc());
+        d1.setText(listquestionreading1.get(a).getAnwd());
+        suggest.setText(listquestionreading1.get(a).getFix());
     }
     //su kien chon cau hoi.........................................................................
     public void onClick(View view)
     {
         switch (view.getId())
         {
-            case R.id.c1: {
-                i = 0;
+            case R.id.btn_back:
+            {
+                clearFocus();
+                i = i - 1;
+                number.setText(i+1+"/30");
+                if(i==0)
+                {
+                    checkbutton(next,back);
+                }
+                else {
+                    next.setEnabled(true);
+                }
                 getquestion(i);
-                change_number("1");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c2: {
-                i=1;
-                getquestion(i);
-                change_number("2");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c3: {
-                i=2;
-                getquestion(i);
-                change_number("3");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c4: {
-                i=3;
-                getquestion(i);
-                change_number("4");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c5: {
-                i=4;
-                getquestion(i);
-                change_number("5");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c6: {
-                i=5;
-                getquestion(i);
-                change_number("6");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c7: {
-                i=6;
-                getquestion(i);
-                change_number("7");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c8: {
-                i=7;
-                getquestion(i);
-                change_number("8");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c9: {
-                i=8;
-                getquestion(i);
-                change_number("9");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c10: {
-                i=9;
-                getquestion(i);
-                change_number("10");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c11: {
-                i=10;
-                getquestion(i);
-                change_number("11");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c12: {
-                i=11;
-                getquestion(i);
-                change_number("12");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c13: {
-                i=12;
-                getquestion(i);
-                change_number("13");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c14: {
-                i=13;
-                getquestion(i);
-                change_number("14");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c15: {
-                i=14;
-                getquestion(i);
-                change_number("15");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c16: {
-                i=15;
-                getquestion(i);
-                change_number("16");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c17: {
-                i=16;
-                getquestion(i);
-                change_number("17");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c18: {
-                i=17;
-                getquestion(i);
-                change_number("18");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c19: {
-                i=18;
-                getquestion(i);
-                change_number("19");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c20: {
-                i=19;
-                getquestion(i);
-                change_number("20");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c21: {
-                i=20;
-                getquestion(i);
-                change_number("21");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c22: {
-                i=21;
-                getquestion(i);
-                change_number("22");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c23: {
-                i=22;
-                getquestion(i);
-                change_number("23");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c24: {
-                i=23;
-                getquestion(i);
-                change_number("24");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c25: {
-                i=24;
-                getquestion(i);
-                change_number("25");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c26: {
-                i=25;
-                getquestion(i);
-                change_number("26");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c27: {
-                i=26;
-                getquestion(i);
-                change_number("27");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c28: {
-                i=27;
-                getquestion(i);
-                change_number("28");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c29: {
-                i=28;
-                getquestion(i);
-                change_number("29");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
-            case R.id.c30: {
-                i=29;
-                getquestion(i);
-                change_number("30");
-                loadcheckchecked(listquestionreading1.get(i).getUser_anw());
-                break;
-            }
+                loadAns(i);
+                if(temp==1)
+                {
+                    review(i);
+                }
 
+                break;
+            }
+            case R.id.btn_next:
+            {
+                clearFocus();
+                i = i + 1;
+                number.setText(i+1+"/30");
+                if(i==29)
+                {
+                    checkbutton(back,next);
+                }
+                else{
+                    back.setEnabled(true);
+                }
+                getquestion(i);
+                if(temp==1)
+                {
+                    review(i);
+                }
+
+                loadAns(i);
+                break;
+            }
+            case R.id.btn_submit:
+            {
+                temp = 1;
+                checktest();
+                break;
+            }
+            case R.id.a_1:
+            {
+                saveAns(1,i);
+                setFocus(unfocus,btn[0]);
+                break;
+            }
+            case R.id.b_1:
+            {
+                saveAns(2,i);
+                setFocus(unfocus,btn[1]);
+                break;
+            }
+            case R.id.c_1:
+            {
+                saveAns(3,i);
+                setFocus(unfocus,btn[2]);
+                break;
+            }
+            case R.id.d_1:
+            {
+                saveAns(4,i);
+                setFocus(unfocus,btn[3]);
+                break;
+            }
+        }
+    }
+    public void checkbutton(Button btn_unfocus, Button btn_focus)//button next, back
+    {
+        btn_unfocus.setEnabled(true);
+        btn_focus.setEnabled(false);
+    }
+    private void setFocus(Button btn_unfocus, Button btn_focus){
+        if(btn_unfocus == null)
+        {
+            btn_focus.setBackgroundResource(R.drawable.checkkkk);
+        }
+        else
+        {
+            btn_unfocus.setBackgroundResource(R.drawable.backgroud);
+            btn_focus.setBackgroundResource(R.drawable.checkkkk);
+        }
+        this.unfocus = btn_focus;
+    }
+    public void clearFocus()
+    {
+        for(int i = 0; i < btn.length ; i++)
+        {
+            btn[i].setBackgroundResource(R.drawable.backgroud);
+
+        }
+        unfocus = null;
+    }
+    public void saveAns(int i, int i2)
+    {
+        switch (i) {
+            case 1:
+            {
+                listquestionreading1.get(i2).setUser_anw(1);
+                break;
+            }
+            case 2:
+            {
+                listquestionreading1.get(i2).setUser_anw(2);
+                break;
+            }
+            case 3:
+            {
+                listquestionreading1.get(i2).setUser_anw(3);
+                break;
+            }
+            case 4:
+            {
+                listquestionreading1.get(i2).setUser_anw(4);
+                break;
+            }
+        }
+    }
+    public void loadAns(int i)
+    {
+        switch (listquestionreading1.get(i).getUser_anw())
+        {
+            case 1:
+            {
+                setFocus(unfocus,btn[0]);
+                break;
+            }
+            case 2:
+            {
+                setFocus(unfocus,btn[1]);
+                break;
+            }
+            case 3:
+            {
+                setFocus(unfocus,btn[2]);
+                break;
+            }
+            case 4:
+            {
+                setFocus(unfocus,btn[3]);
+                break;
+            }
         }
     }
     //xu ly json nhan tu API.......................................................................
@@ -416,49 +317,13 @@ public class reading_activity extends AppCompatActivity {
         }
         return arr;
     }
-    //xu ly goi lai rafio button...................................................................
-    public void loadcheckchecked(int a)
-    {
-        switch (a)
-        {
-            case 1:
-            {
-                //Toast.makeText(this, ""+a, Toast.LENGTH_SHORT).show();
-                groupanwser.check(R.id.a);
-                break;
-            }
-            case 2:
-            {
-                //Toast.makeText(this, ""+a, Toast.LENGTH_SHORT).show();
-                groupanwser.check(R.id.b);
-                break;
-            }
-            case 3:
-            {
-                //Toast.makeText(this, ""+a, Toast.LENGTH_SHORT).show();
-                groupanwser.check(R.id.c);
-                break;
-            }
-            case 4:
-            {
-                //Toast.makeText(this, "123"+a, Toast.LENGTH_SHORT).show();
-                groupanwser.check(R.id.d);
-                break;
-            }
-            default:
-            {
-                //Toast.makeText(this, ""+a, Toast.LENGTH_SHORT).show();
-                groupanwser.clearCheck();
-                break;
-            }
-        }
-    }
     //kiem tra dap an..............................................................................
     public void checktest()
     {
-        //khoa dap an
-        for(int i = 0; i < groupanwser.getChildCount(); i++){
-            (groupanwser.getChildAt(i)).setEnabled(false);
+        for(int i = 0; i < btn.length ; i++)
+        {
+            btn[i] = findViewById(btn_id[i]);
+            btn[i].setEnabled(false);
         }
         socaudung = 0;
         for(readingdata q : listquestionreading1)
@@ -484,29 +349,62 @@ public class reading_activity extends AppCompatActivity {
         builder.setMessage("Số câu đúng: "+socaudung);
         builder.setPositiveButton("Xem gợi ý đáp án!", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
+            public void onClick(DialogInterface dialogInterface, int ia) {
+                suggest.setVisibility(View.VISIBLE);
+                review(i);
+                suggest.setText(listquestionreading1.get(i).getFix());
             }
         });
         builder.setNegativeButton("Thoát!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+                onBackPressed();
             }
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    //timer........................................................................................
-    public void starttimer()
+    public void review(int i)
     {
+        if(listquestionreading1.get(i).getAnwser() != listquestionreading1.get(i).getUser_anw())
+        {
+            switch (listquestionreading1.get(i).getAnwser())
+            {
+                case 1:
+                {
+                    btn[0].setBackgroundResource(R.drawable.right);
+                    break;
+                }
+                case 2:
+                {
+                    btn[1].setBackgroundResource(R.drawable.right);
+                    break;
+                }
+                case 3:
+                {
+                    btn[2].setBackgroundResource(R.drawable.right);
+                    break;
+                }
+                case 4:
+                {
+                    btn[3].setBackgroundResource(R.drawable.right);
+                    break;
+                }
+            }
+        }
+    }
+    //timer........................................................................................
+    public void starttimer(int i)
+    {
+        if(i == 1){
+            countDownTimer.cancel();
+        }
         countDownTimer = new CountDownTimer(timeleft,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeleft = millisUntilFinished;
                 updatetime();
             }
-
             @Override
             public void onFinish() {
                 checktest();

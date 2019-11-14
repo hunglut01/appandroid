@@ -15,25 +15,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".listening.listening"
+        <activity android:name=".listening.listening_photo"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".listening.listening_activity"
             android:theme="@style/AppTheme1">
-
+        </activity>
+        <activity
+            android:name=".listening.listening_conversation"
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".grammar.grammar_detail"
-            ></activity>
+            android:theme="@style/AppTheme1" />
         <activity
             android:name=".grammar.grammar_activity"
-            android:theme="@style/AppTheme1"></activity>
+            android:theme="@style/AppTheme1" />
         <activity
             android:name=".vocabulary.Irregular_verb_activity"
             android:theme="@style/AppTheme1" />
         <activity
             android:name=".reading.reading_activity"
-            android:theme="@style/AppTheme1" />
+            android:theme="@style/AppTheme">
+        </activity>
         <activity
             android:name=".vocabulary.vocabulary_activity"
-            android:theme="@style/AppTheme1"></activity>
+            android:theme="@style/AppTheme1" />
         <activity
             android:name=".Main_menu"
             android:theme="@style/AppTheme">
@@ -42,7 +50,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".login_activity"

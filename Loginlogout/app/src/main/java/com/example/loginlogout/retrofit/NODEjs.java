@@ -16,8 +16,8 @@ public interface NODEjs {
     @FormUrlEncoded
     Observable<String> loginUser(@Field("username") String username,
                                     @Field("password") String password);
-    @GET("search/{word}")
-    Observable<String> Search(@Path("word") String word);
+    @GET("searchav/{word}")
+    Observable<String> Searchav(@Path("word") String word);
 
     @GET("searchva/{word}")
     Observable<String> Searchva(@Path("word") String word);
@@ -30,4 +30,10 @@ public interface NODEjs {
 
     @GET("grammar")
     Observable<String> grammar();
+
+    @GET("listening_conversation")
+    Observable<String> listening();
+
+    @GET("listening_photo")
+    Observable<String> listeningbyphoto();
 }

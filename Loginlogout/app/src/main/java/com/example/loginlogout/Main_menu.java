@@ -28,9 +28,7 @@ public class Main_menu extends AppCompatActivity {
         reading = findViewById(R.id.card_reading);
         grammar = findViewById(R.id.card_grammar);
         logout = findViewById(R.id.card_logout);
-        /*Intent intent = getIntent();
-        String name =intent.getStringExtra("name");
-        inname.setText(name);*/
+        listening = findViewById(R.id.card_listen);
         //check login
         session.checkLogin();
         String name = session.getUserDetails();
@@ -53,6 +51,13 @@ public class Main_menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Main_menu.this, grammar_activity.class);
+                startActivity(intent1);
+            }
+        });
+        listening.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Main_menu.this, com.example.loginlogout.listening.listening_activity.class);
                 startActivity(intent1);
             }
         });

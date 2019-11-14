@@ -3,40 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/custom_item_istview"
     android:id="@+id/itemGrammarLinear">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/custom_item_istview"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
+        android:weightSum="100"
+        android:layout_margin="10dp"
+        android:background="@drawable/custom_item_istview">
+
+        <ImageView
+            android:id="@+id/pictureGrammar"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_margin="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="28"></ImageView>
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="72"
+            android:weightSum="100">
             <TextView
                 android:id="@+id/lbl_grammar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:textSize="23dp"
+                android:text="text"
+                android:textFontWeight="6"
                 android:layout_marginTop="12dp"
                 android:fontFamily="sans-serif-condensed"
-                android:paddingLeft="40dp"
-                android:text="text"
+                android:layout_weight="70"
                 android:textColor="#022D18"
-                android:textFontWeight="6"
-                android:textSize="23dp"
-                android:layout_centerHorizontal="true"></TextView>
+                ></TextView>
             <TextView
                 android:id="@+id/noteGrammar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:textSize="14dp"
+                android:layout_marginTop="-10dp"
+                android:layout_weight="30"
                 android:textColor="#022D18"
-                android:text="text"
-                android:layout_below="@+id/lbl_grammar"
-                android:paddingLeft="40dp"
-                android:paddingBottom="12dp"/>
-        </RelativeLayout>
+                android:text="text"> </TextView>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
