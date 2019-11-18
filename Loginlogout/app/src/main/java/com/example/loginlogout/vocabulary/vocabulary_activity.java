@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.loginlogout.R;
 import com.example.loginlogout.adapter.WordAdapter;
@@ -40,6 +41,7 @@ public class vocabulary_activity extends AppCompatActivity {
     private ActionBar actionBar;
     private SearchView searchView;
     private LinearLayout anhviet, vietanh, batquytac;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +73,14 @@ public class vocabulary_activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 text.setText("Anh-Việt");
+                i = 0;
             }
         });
         vietanh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 text.setText("Việt-Anh");
+                i = 1;
             }
         });
         lvList = findViewById(R.id.lvList);
@@ -124,7 +128,8 @@ public class vocabulary_activity extends AppCompatActivity {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(final String s) {
+                wordList.clear();
                 if(s.isEmpty())
                 {
                     wordList.clear();
@@ -132,66 +137,141 @@ public class vocabulary_activity extends AppCompatActivity {
                     linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
                     lvList.setAdapter(wordAdapter);
                     wordAdapter.notifyDataSetChanged();
-                    //return false;
+
                 }
                 else
                 {
-                    if(text.getText().equals("Anh-Việt"))
+                    if(i == 0)
                     {
-                        initdata(s);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new initAV().execute(s);
+                            }
+                        });
+                        //initdata(s);
                     }
                     else
                     {
-                        initdataVA(s);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new initVA().execute(s);
+                            }
+                        });
+                        //initdataVA(s);
                     }
                 }
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
+            public boolean onQueryTextChange(final String s) {
+                wordList.clear();
+                if(s.isEmpty())
+                {
+                    wordList.clear();
+                    wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
+                    linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
+                    lvList.setAdapter(wordAdapter);
+                    wordAdapter.notifyDataSetChanged();
 
-                return true;
+                }
+                else
+                {
+                    if(i == 0)
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new initAV().execute(s);
+                            }
+                        });
+                        //initdata(s);
+                    }
+                    else
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new initVA().execute(s);
+                            }
+                        });
+                        //initdataVA(s);
+                    }
+                }
+                return false;
             }
         });
     }
-
-    public void initdata(String a) {
-        wordList.clear();
-        compositeDisposable.add(API.Searchav(a)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        ArrayList<Word> arr = getWordList(s);
-                        wordList.addAll(arr);
-                        wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
-                        linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
-                        lvList.setAdapter(wordAdapter);
-                        wordAdapter.notifyDataSetChanged();
-
-                    }
-                }));
-    }
-    public void initdataVA(String a)
+    //get data anh viet
+    public class initAV extends AsyncTask<String,Integer,String>
     {
-        wordList.clear();
-        compositeDisposable.add(API.Searchva(a)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        ArrayList<Word> arr = getWordList(s);
-                        wordList.addAll(arr);
-                        wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
-                        linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
-                        lvList.setAdapter(wordAdapter);
-                        wordAdapter.notifyDataSetChanged();
 
-                    }
-                }));
+        @Override
+        protected String doInBackground(String... strings) {
+            compositeDisposable.add(API.Searchav(strings[0])
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String s) throws Exception {
+                            if(s.contains("Không tìm thấy từ này!"))
+                            {
+                                Toast.makeText(vocabulary_activity.this, ""+s, Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                ArrayList<Word> arr = getWordList(s);
+                                wordList.addAll(arr);
+                                wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
+                                linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
+                                lvList.setAdapter(wordAdapter);
+                                wordAdapter.notifyDataSetChanged();
+                            }
+
+
+                        }
+                    }));
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+    }
+    //get data viet anh
+    public class initVA extends AsyncTask<String,Integer,String>
+    {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            compositeDisposable.add(API.Searchva(strings[0])
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String s) throws Exception {
+                            if(s.contains("Không tìm thấy từ này!"))
+                            {
+                                Toast.makeText(vocabulary_activity.this, ""+s, Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                ArrayList<Word> arr = getWordList(s);
+                                wordList.addAll(arr);
+                                wordAdapter = new WordAdapter(wordList,vocabulary_activity.this);
+                                linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
+                                lvList.setAdapter(wordAdapter);
+                                wordAdapter.notifyDataSetChanged();
+                            }
+
+
+                        }
+                    }));
+            return null;
+        }
     }
 
 }

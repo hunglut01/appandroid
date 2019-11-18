@@ -6,6 +6,7 @@ public class Word {
     public String word;
     public String html;
 
+
     public int getId() {
         return id;
     }

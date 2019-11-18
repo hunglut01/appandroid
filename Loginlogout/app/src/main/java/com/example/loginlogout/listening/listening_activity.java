@@ -12,14 +12,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.loginlogout.R;
-import com.example.loginlogout.model.ListeningModal;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 public class listening_activity extends AppCompatActivity implements View.OnClickListener {
     private ActionBar actionBar;
-    static ArrayList<ListeningModal> arr = new ArrayList();
     public ImageView photo, imgconversation;
     LinearLayout conversation,photograph;
     @Override

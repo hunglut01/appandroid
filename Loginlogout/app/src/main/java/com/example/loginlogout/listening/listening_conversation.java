@@ -1250,4 +1250,33 @@ public class listening_conversation extends AppCompatActivity implements View.On
             }
         }
     }
+
+    @Override
+    protected void onPause() {
+        mediaPlayer.release();
+        playaudio("http://10.0.2.2:3000/cau1");
+        super.onPause();
+    }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Thông báo!");
+        builder.setMessage("Bạn có muốn thoát hay không?");
+        builder.setPositiveButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int ia) {
+                return;
+            }
+        });
+        builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                listening_conversation.super.onBackPressed();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        //super.onBackPressed();
+    }
 }

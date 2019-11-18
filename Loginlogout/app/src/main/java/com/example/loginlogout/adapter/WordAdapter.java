@@ -2,6 +2,7 @@ package com.example.loginlogout.adapter;
 
 import android.content.Context;
 import android.text.Html;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordHolder> {
         final Word word = wordList.get(position);
         holder.tvWord.setText(word.word);
 
+        holder.tvWord.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
         holder.tvWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

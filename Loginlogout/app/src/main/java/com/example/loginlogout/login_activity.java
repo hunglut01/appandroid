@@ -152,6 +152,16 @@ public class login_activity extends AppCompatActivity {
                     @Override
                     public void accept(String s) throws Exception {
                         showdialog(s);
+                        if(s.contains("Đăng kí thành công!!!"))
+                        {
+                            clear();
+                            title.setText(getResources().getString(R.string.sign_in));
+                            btn_login.setVisibility(View.VISIBLE);
+                            btn_newuser.setVisibility(View.VISIBLE);
+                            edt_verifypass.setVisibility(View.GONE);
+                            btn_reg.setVisibility(View.GONE);
+                            btn_to_login.setVisibility(View.GONE);
+                        }
                     }
                 }));
     }

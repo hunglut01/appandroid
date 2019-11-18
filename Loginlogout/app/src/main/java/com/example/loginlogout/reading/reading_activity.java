@@ -393,6 +393,28 @@ public class reading_activity extends AppCompatActivity implements View.OnClickL
             }
         }
     }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Thông báo!");
+        builder.setMessage("Bạn có muốn thoát hay không?");
+        builder.setPositiveButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int ia) {
+                return;
+            }
+        });
+        builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                reading_activity.super.onBackPressed();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        //super.onBackPressed();
+    }
     //timer........................................................................................
     public void starttimer(int i)
     {
