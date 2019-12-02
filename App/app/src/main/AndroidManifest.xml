@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.loginlogout">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".vocabulary.vietanh_activity"
+            android:theme="@style/AppTheme1"></activity>
+        <activity
+            android:name=".validation.resetpassword_activity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".validation.register_activity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".listening.listening_photo"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".listening.listening_activity"
+            android:theme="@style/AppTheme1" />
+        <activity
+            android:name=".listening.listening_conversation"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".grammar.grammar_detail"
+            android:theme="@style/AppTheme1" />
+        <activity
+            android:name=".grammar.grammar_activity"
+            android:theme="@style/AppTheme1" />
+        <activity
+            android:name=".vocabulary.Irregular_verb_activity"
+            android:theme="@style/AppTheme1" />
+        <activity
+            android:name=".reading.reading_activity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".vocabulary.vocabulary_activity"
+            android:theme="@style/AppTheme1" />
+        <activity
+            android:name=".Main_menu"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".validation.login_activity"
+            android:theme="@style/AppTheme"></activity>
+    </application>
+
+</manifest>
