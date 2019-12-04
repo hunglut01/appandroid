@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".reading.reading_activity"
+    tools:context=".reading.reading_test_activity"
     android:layout_weight="10">
     <LinearLayout
         android:id="@+id/question_layout"

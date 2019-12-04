@@ -131,6 +131,7 @@ public class vocabulary_activity extends AppCompatActivity {
     }
 
     public void initSearchIv() {
+        load();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String s) {
@@ -144,8 +145,6 @@ public class vocabulary_activity extends AppCompatActivity {
                     linearLayoutManager = new LinearLayoutManager(vocabulary_activity.this);
                     suggest.setAdapter(wordAdapter);
                     wordAdapter.notifyDataSetChanged();
-
-
                 }
                 else
                 {
@@ -162,7 +161,6 @@ public class vocabulary_activity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(final String s) {
-                load();
                 wordList.clear();
                 if(s.equals(""))
                 {
@@ -195,21 +193,28 @@ public class vocabulary_activity extends AppCompatActivity {
         session = new sessionmanager(getApplicationContext());
         String id = session.getInuser();
         wordListSaved.clear();
-        compositeDisposable.add(API.loadWord(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        ArrayList<Word> arr = getWordList(s);
-                        wordListSaved.addAll(arr);
-                        wordAdapterSaved = new WordAdapterSaved(wordListSaved,vocabulary_activity.this);
-                        lvList.setAdapter(wordAdapterSaved);
-                        linearLayoutManager1 = new LinearLayoutManager(vocabulary_activity.this);
-                        lvList.setLayoutManager(linearLayoutManager1);
-                        wordAdapterSaved.notifyDataSetChanged();
-                    }
-                }));
+        try {
+            compositeDisposable.add(API.loadWord(id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String s) throws Exception {
+                            ArrayList<Word> arr = getWordList(s);
+                            wordListSaved.addAll(arr);
+                            wordAdapterSaved = new WordAdapterSaved(wordListSaved,vocabulary_activity.this);
+                            lvList.setAdapter(wordAdapterSaved);
+                            linearLayoutManager1 = new LinearLayoutManager(vocabulary_activity.this);
+                            lvList.setLayoutManager(linearLayoutManager1);
+                            wordAdapterSaved.notifyDataSetChanged();
+                        }
+                    }));
+        }
+        catch (Exception e)
+        {
+
+        }
+
     }
     //get data anh viet
     public class initAV extends AsyncTask<String,Integer,String>

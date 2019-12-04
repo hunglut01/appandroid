@@ -11,11 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 
 import com.example.loginlogout.grammar.grammar_activity;
-import com.example.loginlogout.reading.reading_activity;
+import com.example.loginlogout.reading.reading_test_activity;
 import com.example.loginlogout.vocabulary.vocabulary_activity;
 
 public class Main_menu extends AppCompatActivity {
@@ -53,7 +52,7 @@ public class Main_menu extends AppCompatActivity {
         reading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Main_menu.this, reading_activity.class);
+                Intent intent1 = new Intent(Main_menu.this, reading_test_activity.class);
                 startActivity(intent1);
             }
         });

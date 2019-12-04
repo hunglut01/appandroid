@@ -66,4 +66,9 @@ public interface NODEjs {
 
     @GET("listening_photo")
     Observable<String> listeningbyphoto();
+
+    @GET("savescore/{id}/{type}/{score}")
+    Observable<String> saveScore(@Path("id") String id,
+                                 @Path("type") String type,
+                                 @Path("score") String score);
 }
