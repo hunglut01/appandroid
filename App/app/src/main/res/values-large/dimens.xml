@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--chỉnh sửa phần ListView-->
+    <dimen name="GrammarNameSize">32dp</dimen>
+    <dimen name="GrammarNameNote">19dp</dimen>
+    <dimen name="dividerHeight">21dp</dimen>
+    <dimen name="ListView_MarginLeft">15dp</dimen>
+    <dimen name="ListView_MarginRight">15dp</dimen>
+    <dimen name="ImageHeight">112dp</dimen>
+    <dimen name="PaddingTop_Linear">19dp</dimen>
+    <dimen name="PaddingBottom_Linear">19dp</dimen>
+    <dimen name="Image_marginLeft">19dp</dimen>
+    <dimen name="Image_marginTop">11dp</dimen>
+    <dimen name="GrammarName_MarginTop">10dp</dimen>
+    <dimen name="GrammarName_PaddingLeft">38dp</dimen>
+    <dimen name="GrammarName_PaddingRight">8dp</dimen>
+    <dimen name="NoteName_MarginTop">-11dp</dimen>
+    <dimen name="NoteName_PaddingLeft">38dp</dimen>
+    <dimen name="NoteName_PaddingRight">9dp</dimen>
+    <!--End chỉnh sửa phần ListView-->
+</resources>

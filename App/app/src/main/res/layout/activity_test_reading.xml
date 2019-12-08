@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".reading.reading_test_activity"
+    android:layout_weight="10">
+    <LinearLayout
+        android:id="@+id/question_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="7"
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <Button
+                android:id="@+id/txt_numques"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="1/30" />
+            <Button
+                android:id="@+id/btn_back"
+                style="@android:style/Widget.DeviceDefault.Button.Toggle"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="5dp"
+                android:background="#FFB1A9A9"
+                android:text="BACK" />
+            <Button
+                android:id="@+id/btn_next"
+                style="@android:style/Widget.DeviceDefault.Button.Toggle"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="0dp"
+                android:background="#FFB1A9A9"
+                android:text="Next" />
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:background="@drawable/button"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/txt_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#B1A9A9"
+                android:text="DDaay la cau hoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+                android:textSize="20dp" />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/txt_question">
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/a_1"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:text="A"
+                        android:textSize="13dp"
+                        android:background="@drawable/backgroud"/>
+
+                    <TextView
+                        android:id="@+id/a"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="day la cau hoi 1"
+                        android:textSize="13dp" />
+                </TableRow>
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/b_1"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:text="B"
+                        android:textSize="13dp" />
+                    <TextView
+                        android:id="@+id/b"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="day la cau hoi 1"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="13dp"/>
+                </TableRow>
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/c_1"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:text="C"
+                        android:textSize="13dp" />
+                    <TextView
+                        android:id="@+id/c"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="day la cau hoi 1"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="13dp"/>
+                </TableRow>
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/d_1"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+
+                        android:text="D"
+                        android:textSize="13dp" />
+                    <TextView
+                        android:id="@+id/d"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="day la cau hoi 1"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="13dp"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_item_istview">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_suggest"
+                android:text="suggest hereeeeeee"
+                android:textSize="20dp"
+
+                android:layout_margin="20dp"
+                ></TextView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
