@@ -22,6 +22,7 @@ import com.example.loginlogout.model.listeningdata;
 import com.example.loginlogout.model.readingdata;
 import com.example.loginlogout.retrofit.NODEjs;
 import com.example.loginlogout.retrofit.retrofitclient;
+import com.example.loginlogout.sessionmanager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -181,17 +182,20 @@ public class listening_conversation extends AppCompatActivity implements View.On
         {
             case R.id.btn_submit:
             {
-                for(int i = 0; i < btn1.length ; i++)
-                {
-                    btn1[i].setEnabled(false);
-                    btn2[i].setEnabled(false);
-                    btn3[i].setEnabled(false);
-                }
+
                 stop.setEnabled(false);
                 mediaPlayer.release();
-                playaudio("http://10.0.2.2:3000/cau1");
-                checkResult();
+                playaudio("http://23.101.29.94:3000/cau1");
                 temp =1;
+                if(submit.getText().toString() == getResources().getString(R.string.submit))
+                {
+                    checkResult();
+                    submit.setText(getResources().getString(R.string.exit));
+                }
+                else
+                {
+                    onBackPressed();
+                }
                 break;
             }
             case R.id.btn_stop:
@@ -1113,7 +1117,25 @@ public class listening_conversation extends AppCompatActivity implements View.On
             }
 
         }
+        for(int i = 0; i < btn1.length ; i++)
+        {
+            btn1[i] = findViewById(btn_id1[i]);
+            //btn[i].setEnabled(false);
+        }
+        if(btn1[1].isEnabled())
+        {
+            saveScore(Integer.toString(right));
+            for(int i = 0; i < btn1.length ; i++)
+            {
+                btn1[i].setEnabled(false);
+                btn2[i].setEnabled(false);
+                btn3[i].setEnabled(false);
+            }
+        }
+        else
+        {
 
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Kết quả!!!");
         builder.setMessage("Số câu đúng: "+ right);
@@ -1250,11 +1272,32 @@ public class listening_conversation extends AppCompatActivity implements View.On
             }
         }
     }
+    //luu diem len server............................................................................
+    public void saveScore(String i)
+    {
+        sessionmanager session;
+        session = new sessionmanager(getApplicationContext());
+        String id = session.getInuser();
+        try{
+            compositeDisposable.add(API.saveScore(id,"Listening Conversation ",i)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String s) throws Exception {
 
+                        }
+                    }));
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
     @Override
     protected void onPause() {
         mediaPlayer.release();
-        playaudio("http://10.0.2.2:3000/cau1");
+        playaudio("http://23.101.29.94:3000/cau1");
         super.onPause();
     }
     @Override

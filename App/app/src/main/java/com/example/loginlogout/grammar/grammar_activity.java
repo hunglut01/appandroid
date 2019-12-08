@@ -32,6 +32,7 @@ public class grammar_activity extends AppCompatActivity implements AdapterView.O
     private ListView lstGrammar;
     static ArrayList<GrammarModel> arr = new ArrayList();
     private GrammarAdapter adapter;
+
     NODEjs API;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     @Override

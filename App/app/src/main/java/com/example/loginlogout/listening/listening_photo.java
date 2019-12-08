@@ -18,6 +18,7 @@ import com.example.loginlogout.R;
 import com.example.loginlogout.model.listeningdata;
 import com.example.loginlogout.retrofit.NODEjs;
 import com.example.loginlogout.retrofit.retrofitclient;
+import com.example.loginlogout.sessionmanager;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -42,10 +43,11 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
     private Handler handler;
     private MediaPlayer mediaPlayer;
     private ImageView img;
+    private String data, socauhoi, audioURL;
     NODEjs API;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     private ArrayList<com.example.loginlogout.model.listeningdata> listeningdata = new ArrayList<>();
-    int i = 0 , right, temp = 0;
+    int i = 0 , right, temp = 0, id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,9 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
         Retrofit retrofit = retrofitclient.getInstance();
         API = retrofit.create(NODEjs.class);
         //
+        id = getIntent().getExtras().getInt("id");
+        data = listening_photo_list.arr.get(id).getName();
+        socauhoi = listening_photo_list.arr.get(id).getNumber();
         for(int i = 0; i < btn_id.length; i++)
         {
             btn[i] = findViewById(btn_id[i]);
@@ -72,8 +77,6 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
         submit.setOnClickListener(this);
         handler = new Handler();
         back.setEnabled(false);
-        Picasso.get().load("http://23.101.29.94:1111/anh1_de1").fit().into(img);
-        playaudio("http://23.101.29.94:3000/audio/photo/1");
         insertlist();
     }
 
@@ -127,7 +130,16 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
                 stop.setEnabled(false);
                 mediaPlayer.release();
                 playaudio("http://23.101.29.94:3000/audio/photo/1");
-                checkResult();
+                if(submit.getText().toString() == getResources().getString(R.string.submit))
+                {
+                    checkResult();
+                    submit.setText(getResources().getString(R.string.exit));
+                }
+                else
+                {
+                    onBackPressed();
+                }
+                break;
             }
             case R.id.btn_stop:
             {
@@ -177,65 +189,13 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
     }
     public void loadImage(int i)
     {
-        switch (i)
-        {
-            case 0:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh1_de1").fit().into(img);
-                break;
-            }
-            case 1:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh2_de1").fit().into(img);
-                break;
-            }
-            case 2:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh3_de1").fit().into(img);
-                break;
-            }
-            case 3:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh4_de1").fit().into(img);
-                break;
-            }
-            case 4:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh5_de1").fit().into(img);
-                break;
-            }
-            case 5:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh6_de1").fit().into(img);
-                break;
-            }
-            case 6:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh7_de1").fit().into(img);
-                break;
-            }
-            case 7:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh8_de1").fit().into(img);
-                break;
-            }
-            case 8:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh9_de1").fit().into(img);
-                break;
-            }
-            case 9:
-            {
-                Picasso.get().load("http://23.101.29.94:1111/anh10_de1").fit().into(img);
-                break;
-            }
-        }
+        Picasso.get().load(listeningdata.get(i).getImage()).fit().into(img);
     }
     public void insertlist()
     {
         try
         {
-            compositeDisposable.add(API.listeningbyphoto()
+            compositeDisposable.add(API.listeningbyphoto(data)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<String>() {
@@ -243,6 +203,17 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
                         public void accept(String s) throws Exception {
                             ArrayList<listeningdata> a = initlistquestion(s);
                             listeningdata.addAll(a);
+                            Picasso.get().load(listeningdata.get(i).getImage()).fit().into(img);
+                        }
+                    }));
+            compositeDisposable.add(API.getaudio(data)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String s) throws Exception {
+                            audioURL = getlink(s);
+                            playaudio(audioURL);
                         }
                     }));
         }
@@ -251,6 +222,11 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
         }
     }
+    public  String getlink(String s) throws JSONException {
+        JSONObject jsonObject = new JSONObject(s);
+        String temp = jsonObject.getString("link");
+        return temp;
+    }
     public ArrayList<listeningdata> initlistquestion(String s) throws JSONException {
         ArrayList<listeningdata> arr = new ArrayList<>();
         JSONArray jsonArray = new JSONArray(s);
@@ -258,6 +234,7 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
         {
             listeningdata temp = new listeningdata();
             JSONObject jsonObject = jsonArray.getJSONObject(i);
+            temp.image = jsonObject.getString("Picture");
             temp.anwa = jsonObject.getString("optionA");
             temp.anwb = jsonObject.getString("optionB");
             temp.anwc = jsonObject.getString("optionC");
@@ -312,7 +289,23 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
             }
 
         }
+        for(int i = 0; i < btn.length ; i++)
+        {
+            btn[i] = findViewById(btn_id[i]);
+            //btn[i].setEnabled(false);
+        }
+        if(btn[1].isEnabled())
+        {
+            saveScore(Integer.toString(right));
+            for(int i = 0; i < btn.length ; i++)
+            {
+                btn[i].setEnabled(false);
+            }
+        }
+        else
+        {
 
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Kết quả!!!");
         builder.setMessage("Số câu đúng: "+ right);
@@ -325,7 +318,7 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
         builder.setNegativeButton("Thoát!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                onBackPressed();
+                listening_photo.super.onBackPressed();
             }
         });
         AlertDialog alertDialog = builder.create();
@@ -390,7 +383,6 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
                 }
             };
             handler.postDelayed(runnable, 1000);
-
         }
     }
     private void setFocus(Button btn_unfocus, Button btn_focus){
@@ -446,10 +438,31 @@ public class listening_photo extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onPause() {
         mediaPlayer.release();
-        playaudio("http://10.0.2.2:3000/cau1");
+        playaudio("http://23.101.29.94:3000/cau1");
         super.onPause();
     }
+    //luu diem len server............................................................................
+    public void saveScore(String i)
+    {
+        sessionmanager session;
+        session = new sessionmanager(getApplicationContext());
+        String id = session.getInuser();
+        try{
+            compositeDisposable.add(API.saveScore(id,"Listening Photo "+data,i)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String s) throws Exception {
 
+                        }
+                    }));
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

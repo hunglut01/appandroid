@@ -65,7 +65,7 @@ public class sessionmanager {
             // user is not logged in redirect him to Login Activity
             Intent i = new Intent(_context, login_activity.class);
 
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
 
             // Staring Login Activity
             _context.startActivity(i);

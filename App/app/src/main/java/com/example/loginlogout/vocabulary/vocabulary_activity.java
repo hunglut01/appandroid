@@ -161,6 +161,7 @@ public class vocabulary_activity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(final String s) {
+                load();
                 wordList.clear();
                 if(s.equals(""))
                 {
@@ -192,7 +193,7 @@ public class vocabulary_activity extends AppCompatActivity {
         sessionmanager session;
         session = new sessionmanager(getApplicationContext());
         String id = session.getInuser();
-        wordListSaved.clear();
+
         try {
             compositeDisposable.add(API.loadWord(id)
                     .subscribeOn(Schedulers.io())
@@ -201,6 +202,7 @@ public class vocabulary_activity extends AppCompatActivity {
                         @Override
                         public void accept(String s) throws Exception {
                             ArrayList<Word> arr = getWordList(s);
+                            wordListSaved.clear();
                             wordListSaved.addAll(arr);
                             wordAdapterSaved = new WordAdapterSaved(wordListSaved,vocabulary_activity.this);
                             lvList.setAdapter(wordAdapterSaved);

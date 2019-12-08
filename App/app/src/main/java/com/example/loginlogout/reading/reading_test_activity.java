@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -17,6 +18,8 @@ import com.example.loginlogout.R;
 import com.example.loginlogout.model.readingdata;
 import com.example.loginlogout.retrofit.NODEjs;
 import com.example.loginlogout.retrofit.retrofitclient;
+import com.example.loginlogout.sessionmanager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +36,8 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
     private TextView in_ques,time,suggest;
     private Button start_test, submit, next, back,number,unfocus;
     private int i = 0, temp = 0;
-    private int socaudung;
+    private int socaudung,id;
+    private String data,socauhoi;
     private CountDownTimer countDownTimer;
     private long timeleft = 1200000;
     private Button[] btn = new Button[4];
@@ -41,12 +45,15 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
     private TextView a1,b1,c1,d1;
     NODEjs API;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_reading);
-        //mapping..................................................................................
-
+        id = getIntent().getExtras().getInt("id");
+        data = reading_activity.arr.get(id).getName();
+        socauhoi = reading_activity.arr.get(id).getNumber();
+        //mapping.................................................................................
         in_ques = findViewById(R.id.txt_question);
         for(int i = 0; i < btn.length ; i++)
         {
@@ -76,12 +83,8 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
         API = retrofit.create(NODEjs.class);
         //luu data nhap tu API.....................................................................
         insertlist();
+        number.setText("1/"+socauhoi);
 
-        //su kien bat dau..........................................................................
-
-        //su kien chon dap an......................................................................
-
-        //su kien nop bai..........................................................................
 
     }
     //get all question va hien cau hoi mac dinh....................................................
@@ -89,7 +92,7 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
     {
         try
         {
-            compositeDisposable.add(API.getallreading()
+            compositeDisposable.add(API.getallreading(data)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<String>() {
@@ -148,7 +151,7 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
             {
                 clearFocus();
                 i = i - 1;
-                number.setText(i+1+"/30");
+                number.setText(i+1+"/" +socauhoi);
                 if(i==0)
                 {
                     checkbutton(next,back);
@@ -169,8 +172,8 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
             {
                 clearFocus();
                 i = i + 1;
-                number.setText(i+1+"/30");
-                if(i==29)
+                number.setText(i+1+"/"+socauhoi);
+                if(i==Integer.parseInt(socauhoi)-1)
                 {
                     checkbutton(back,next);
                 }
@@ -189,7 +192,18 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
             case R.id.btn_submit:
             {
                 temp = 1;
-                checktest();
+                if(submit.getText().toString() == getResources().getString(R.string.submit))
+                {
+                    checktest();
+                    submit.setText(getResources().getString(R.string.exit));
+                }
+                else
+                {
+                    onBackPressed();
+                }
+
+
+
                 break;
             }
             case R.id.a_1:
@@ -316,12 +330,11 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
     //kiem tra dap an..............................................................................
     public void checktest()
     {
-        for(int i = 0; i < btn.length ; i++)
-        {
-            btn[i] = findViewById(btn_id[i]);
-            btn[i].setEnabled(false);
-        }
+
+
+
         socaudung = 0;
+
         for(readingdata q : listquestionreading1)
         {
             try
@@ -340,6 +353,23 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
                 Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
             }
         }
+        for(int i = 0; i < btn.length ; i++)
+        {
+            btn[i] = findViewById(btn_id[i]);
+            //btn[i].setEnabled(false);
+        }
+        if(btn[1].isEnabled())
+        {
+            saveScore(Integer.toString(socaudung));
+            for(int i = 0; i < btn.length ; i++)
+            {
+                btn[i].setEnabled(false);
+            }
+        }
+        else
+        {
+
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Kết quả!!!");
         builder.setMessage("Số câu đúng: "+socaudung);
@@ -347,6 +377,7 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(DialogInterface dialogInterface, int ia) {
                 suggest.setVisibility(View.VISIBLE);
+
                 review(i);
                 suggest.setText(listquestionreading1.get(i).getFix());
             }
@@ -354,12 +385,14 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
         builder.setNegativeButton("Thoát!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
                 onBackPressed();
             }
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+    //cham dap an...................................................................................
     public void review(int i)
     {
         if(listquestionreading1.get(i).getAnwser() != listquestionreading1.get(i).getUser_anw())
@@ -389,7 +422,28 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
             }
         }
     }
+    //luu diem len server............................................................................
+    public void saveScore(String i)
+    {
+        sessionmanager session;
+        session = new sessionmanager(getApplicationContext());
+        String id = session.getInuser();
+        try{
+            compositeDisposable.add(API.saveScore(id,"Reading "+data,i)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String s) throws Exception {
 
+                        }
+                    }));
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -404,7 +458,7 @@ public class reading_test_activity extends AppCompatActivity implements View.OnC
         builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                //saveScore(Integer.toString(socaudung));
                 reading_test_activity.super.onBackPressed();
             }
         });

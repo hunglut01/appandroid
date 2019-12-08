@@ -33,8 +33,8 @@ public class listening_activity extends AppCompatActivity implements View.OnClic
         conversation.setOnClickListener(this);
         photo = findViewById(R.id.img_photo);
         imgconversation = findViewById(R.id.img_Conversation);
-        Picasso.get().load("http://23.101.29.94:1111/Conversation").into(photo);
-        Picasso.get().load("http://23.101.29.94:1111/Listening_image").into(imgconversation);
+        Picasso.get().load("http://23.101.29.94:1111/images/image_image.jpg").into(photo);
+        Picasso.get().load("http://23.101.29.94:1111/images/conversation_image.jpg").into(imgconversation);
 
     }
     @Override
@@ -54,7 +54,7 @@ public class listening_activity extends AppCompatActivity implements View.OnClic
         switch (v.getId()) {
             case R.id.photgraph:
             {
-                Intent intent = new Intent(this, listening_photo.class);
+                Intent intent = new Intent(this, listening_photo_list.class);
                 startActivity(intent);
                 break;
             }

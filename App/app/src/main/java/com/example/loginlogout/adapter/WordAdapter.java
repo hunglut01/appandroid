@@ -1,6 +1,7 @@
 package com.example.loginlogout.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.example.loginlogout.model.Word;
 import com.example.loginlogout.retrofit.NODEjs;
 import com.example.loginlogout.retrofit.retrofitclient;
 import com.example.loginlogout.sessionmanager;
+import com.example.loginlogout.vocabulary.detail_word;
 
 import java.util.List;
 
@@ -83,12 +85,14 @@ public class WordAdapter extends RecyclerView.Adapter<WordHolder>{
                 {
 
                 }
-
-                final AlertDialog.Builder builder
+                Intent intent = new Intent(context, detail_word.class);
+                intent.putExtra("data",word.html);
+                context.startActivity(intent);
+                /*final AlertDialog.Builder builder
                         = new AlertDialog.Builder(context);
                 builder.setTitle(word.word);
                 builder.setMessage(Html.fromHtml(word.html));
-                builder.show();
+                builder.show();*/
             }
         });
     }

@@ -137,7 +137,7 @@ public class vietanh_activity extends AppCompatActivity {
         sessionmanager session;
         session = new sessionmanager(getApplicationContext());
         String id = session.getInuser();
-        wordListSaved.clear();
+
         compositeDisposable.add(API.loadWordva(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -145,6 +145,7 @@ public class vietanh_activity extends AppCompatActivity {
                     @Override
                     public void accept(String s) throws Exception {
                         ArrayList<Word> arr = getWordList(s);
+                        wordListSaved.clear();
                         wordListSaved.addAll(arr);
                         wordAdapterSaved = new VAWordAdapterSaved(wordListSaved,vietanh_activity.this);
                         lvList.setAdapter(wordAdapterSaved);

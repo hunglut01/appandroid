@@ -28,4 +28,8 @@
     <string name="donthaveacc">Chưa có tài khoản? Đăng kí</string>
     <string name="continu">Tiếp tục</string>
     <string name="code">Mã xác nhận</string>
+    <string name="select">Chọn bài test:</string>
+    <string name="history">Lịch sử</string>
+    <string name="submit">NỘP BÀI</string>
+    <string name="exit">THOÁT</string>
 </resources>

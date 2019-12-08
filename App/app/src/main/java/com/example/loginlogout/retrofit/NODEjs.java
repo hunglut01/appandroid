@@ -55,8 +55,14 @@ public interface NODEjs {
     @GET("irregular")
     Observable<String> Irregular();
 
-    @GET("getallreading")
-    Observable<String> getallreading();
+    @GET("getlisttest")
+    Observable<String> getlisttest();
+
+    @GET("getlisttestphoto")
+    Observable<String> getlistphototest();
+
+    @GET("getallreading/{id}")
+    Observable<String> getallreading(@Path("id") String id);
 
     @GET("grammar")
     Observable<String> grammar();
@@ -64,11 +70,23 @@ public interface NODEjs {
     @GET("listening_conversation")
     Observable<String> listening();
 
-    @GET("listening_photo")
-    Observable<String> listeningbyphoto();
+    @GET("getaudio/{id}")
+    Observable<String> getaudio(@Path("id") String id);
+
+    @GET("listening_photo/{id}")
+    Observable<String> listeningbyphoto(@Path("id") String id);
+
+    @GET("getlisteningtotal")
+    Observable<String> getlisteningtotal();
+
+    @GET("getreadingtotal")
+    Observable<String> getreadingtotal();
 
     @GET("savescore/{id}/{type}/{score}")
     Observable<String> saveScore(@Path("id") String id,
                                  @Path("type") String type,
                                  @Path("score") String score);
+
+    @GET("getscore/{id}")
+    Observable<String> loadScore(@Path("id") String id);
 }

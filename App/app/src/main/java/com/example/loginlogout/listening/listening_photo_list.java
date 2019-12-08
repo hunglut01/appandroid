@@ -1,4 +1,4 @@
-package com.example.loginlogout.reading;
+package com.example.loginlogout.listening;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.loginlogout.R;
 import com.example.loginlogout.adapter.ReadingAdapter;
@@ -27,7 +26,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class reading_activity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class listening_photo_list extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private ListView listView;
     static ArrayList<ReadingList> arr = new ArrayList();
     private ReadingAdapter adapter;
@@ -36,26 +35,24 @@ public class reading_activity extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reading);
+        setContentView(R.layout.activity_listening_photo_list);
         //init retrofit API........................................................................
         Retrofit retrofit = retrofitclient.getInstance();
         API = retrofit.create(NODEjs.class);
         listView = findViewById(R.id.listreading);
         initdata();
-
         listView.setOnItemClickListener(this);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this,reading_test_activity.class);
+        Intent intent = new Intent(this,listening_photo.class);
         intent.putExtra("id",position);
         startActivity(intent);
-
     }
     public void initdata()
     {
-        compositeDisposable.add(API.getlisttest()
+        compositeDisposable.add(API.getlistphototest()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
@@ -64,7 +61,7 @@ public class reading_activity extends AppCompatActivity implements AdapterView.O
                         ArrayList<ReadingList> temp = inserttoList(s);
                         arr.clear();
                         arr.addAll(temp);
-                        adapter = new ReadingAdapter(arr, reading_activity.this, R.layout.reading_item);
+                        adapter = new ReadingAdapter(arr, listening_photo_list.this, R.layout.reading_item);
                         listView.setAdapter(adapter);
                     }
                 }));
@@ -82,7 +79,4 @@ public class reading_activity extends AppCompatActivity implements AdapterView.O
         }
         return list;
     }
-
-
-
 }

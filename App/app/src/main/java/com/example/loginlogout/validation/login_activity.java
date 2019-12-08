@@ -62,6 +62,10 @@ public class login_activity extends AppCompatActivity {
         {
             showdialog("Không có kết nối mạng!!!");
         }
+        else
+        {
+
+        }
         //event click login........................................................................
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override

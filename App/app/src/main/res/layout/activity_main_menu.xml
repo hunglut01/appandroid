@@ -18,6 +18,86 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="#F5E7CE">
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/tablehistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:visibility="gone"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lịch sử"
+                    android:fontFamily="@font/droidserif_bold"
+                    android:textSize="30dp"
+                    android:layout_centerInParent="true"/>
+
+                <ImageView
+                    android:id="@+id/closeTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_close_black_24dp"
+                    android:layout_alignParentRight="true"></ImageView>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorGray"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:paddingVertical="10dp"
+                    android:text="Tên bài test"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:paddingVertical="10dp"
+                    android:text="Điểm"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Thời gian thi"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp" />
+            </LinearLayout>
+            <ListView
+                android:id="@+id/listhistory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|enterAlways|snap"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -274,7 +354,7 @@
 
                             <LinearLayout
 
-                                android:id="@+id/card_"
+                                android:id="@+id/card_totaltest"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
@@ -365,4 +445,5 @@
 
 
     </LinearLayout>
+
 </RelativeLayout>

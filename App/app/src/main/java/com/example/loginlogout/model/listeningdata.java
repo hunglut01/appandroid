@@ -2,12 +2,30 @@ package com.example.loginlogout.model;
 
 public class listeningdata {
     public String question;
+    public String image;
+    public String audio;
     public String anwa;
     public String anwb;
     public String anwc;
     public String anwd;
     public String anwser;
     public String user_anw;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getAudio() {
+        return audio;
+    }
+
+    public void setAudio(String audio) {
+        this.audio = audio;
+    }
 
     public String getQuestion() {
         return question;

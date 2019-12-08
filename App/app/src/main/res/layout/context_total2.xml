@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/layout_reading"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/stt4"
+            android:text="19."
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_semibold"/>
+        <TextView
+            android:id="@+id/txt_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#B1A9A9"
+            android:text="DDaay la cau hoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+            android:textSize="20dp"
+            android:fontFamily="@font/droidserif_bold"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txt_question">
+            <TableRow>
+
+                <Button
+                    android:id="@+id/caua"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="A"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:background="@drawable/backgroud"/>
+
+                <TextView
+                    android:id="@+id/texta"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="day la cau hoi 1"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/montserrat_semibold"/>
+            </TableRow>
+            <TableRow>
+
+                <Button
+                    android:id="@+id/caub"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="B"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/montserrat_semibold"/>
+                <TextView
+                    android:id="@+id/textb"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="day la cau hoi 1"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/montserrat_semibold"/>
+            </TableRow>
+            <TableRow>
+
+                <Button
+                    android:id="@+id/cauc"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="C"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    />
+                <TextView
+                    android:id="@+id/textc"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="day la cau hoi 1"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/montserrat_semibold"/>
+            </TableRow>
+            <TableRow>
+
+                <Button
+                    android:id="@+id/caud"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="D"
+                    android:textSize="13dp" />
+                <TextView
+                    android:id="@+id/textd"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="day la cau hoi 1"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/montserrat_semibold"/>
+            </TableRow>
+        </TableLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/suggest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/colorGreen"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/txt_suggest"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="20dp"
+                android:text="Day la vi duuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu"/>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</LinearLayout>
